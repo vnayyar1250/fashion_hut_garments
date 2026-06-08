@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fashion Hut Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style-3d.css" />
+</head>
+<body>
+  <div style="max-width:1200px;margin:2rem auto;padding:0 1rem;">
+    <a href="./index.html" style="display:inline-flex;gap:10px;align-items:center;text-decoration:none;color:#c87e3a;font-weight:800;">
+      <i class="fas fa-arrow-left"></i> Back to Website
+    </a>
+    <div id="fh-admin-page-root"></div>
+  </div>
+
+  <script src="admin-panel.js"></script>
+  <script>
+    // Mount point for admin-panel.js
+    (function () {
+      const root = document.getElementById('fh-admin-page-root');
+      // admin-panel.js creates its own UI only when authenticated.
+      // We trigger it by setting up container and letting page load.
+      // admin-panel.js will look for #fh-admin-root; if not present, it will create on auth.
+      // To be safe, create it here.
+      let existing = document.getElementById('fh-admin-root');
+      if (!existing) {
+        existing = document.createElement('div');
+        existing.id = 'fh-admin-root';
+        root.appendChild(existing);
+      }
+
+      // admin-panel.js currently mounts using its own init logic; we just ensure a root exists.
+      // If your admin-panel.js logic mounts automatically, this page works as-is.
+      // Otherwise, admin-panel.js can be adapted later.
+    })();
+  </script>
+</body>
+</html>
+

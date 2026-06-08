@@ -1,0 +1,29 @@
+/* Extra styling for 3D/canvas background and custom UI additions */
+
+#fh3d-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Make sure page content is above the background */
+body > nav,
+body > main,
+body > footer {
+  position: relative;
+  z-index: 2;
+}
+
+/* Small “new” badges (custom feature) */
+.badge.is-new {
+  background: linear-gradient(135deg, rgba(200,126,58,0.22), rgba(224,122,58,0.08));
+  border: 1px solid rgba(200,126,58,0.28);
+}
+
+/* Reduce motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .kinetic-bg {
+    display: none;
+  }
+}
+
