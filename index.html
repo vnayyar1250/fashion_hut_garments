@@ -3,114 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fashion Hut Garments</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-        }
-        
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
-        
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-        
-        main {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        
-        .welcome-section {
-            background: #f4f4f4;
-            padding: 2rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-        }
-        
-        .welcome-section h2 {
-            color: #667eea;
-            margin-bottom: 1rem;
-        }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-        
-        .feature-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        
-        .feature-card h3 {
-            color: #667eea;
-            margin-bottom: 1rem;
-        }
-        
-        footer {
-            background: #333;
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-        }
-    </style>
+    <title>Fashion Hut Garments - Premium Fashion Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1>👗 Fashion Hut Garments 👔</h1>
-        <p>Your Ultimate Destination for Premium Fashion</p>
-    </header>
-    
-    <main>
-        <section class="welcome-section">
-            <h2>Welcome to Fashion Hut Garments</h2>
-            <p>Discover the latest trends and timeless classics in our exclusive collection. From casual wear to formal attire, we have everything you need to express your personal style.</p>
-        </section>
-        
-        <section class="features">
-            <div class="feature-card">
-                <h3>🛍️ Quality Assurance</h3>
-                <p>Premium fabrics and expert craftsmanship in every piece.</p>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-flex">
+                <div class="logo">
+                    <h2>👗 Fashion Hut</h2>
+                    <p>PREMIUM GARMENTS</p>
+                </div>
+                <div class="nav-links">
+                    <a href="#gallery">Gallery</a>
+                    <a href="#about">About</a>
+                    <a href="#contact">Contact</a>
+                </div>
             </div>
-            <div class="feature-card">
-                <h3>🌍 Global Style</h3>
-                <p>Curated collections inspired by fashion capitals around the world.</p>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-text">
+                    <div class="badge">✨ Premium Collections</div>
+                    <h1>Elevate Your Style with Fashion Hut Garments</h1>
+                    <p>Discover the finest selection of ethnic wear, traditional outfits, and contemporary fashion. Each piece crafted with premium quality and expert attention to detail.</p>
+                    <div class="btn-group">
+                        <a href="#gallery" class="btn btn-primary">
+                            <i class="fas fa-shopping-bag"></i> Explore Collection
+                        </a>
+                        <a href="#contact" class="btn btn-outline">
+                            <i class="fas fa-phone"></i> Get in Touch
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-img">
+                    <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500&h=500&fit=crop" alt="Fashion Collection">
+                </div>
             </div>
-            <div class="feature-card">
-                <h3>💯 Customer First</h3>
-                <p>Outstanding service and satisfaction guaranteed on every purchase.</p>
+        </div>
+    </section>
+
+    <!-- Owner Info Card -->
+    <section class="container">
+        <div class="owner-card">
+            <div class="owner-info">
+                <i class="fas fa-store"></i>
+                <span>Owned by Raman Nayyar | Garhshankar, Punjab</span>
             </div>
-        </section>
-    </main>
-    
+            <div class="insta-handle">
+                <a href="https://www.instagram.com/fash_ionvision" target="_blank" style="text-decoration: none; color: #c87e3a;">
+                    <i class="fab fa-instagram"></i> @fash_ionvision
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" style="background: #fefaf5;">
+        <div class="container">
+            <h2 class="section-title">Our Image Collection</h2>
+            <div id="fhImageGridPublic" class="gallery-grid"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="info-section">
+        <div class="container">
+            <h2 class="section-title">Why Choose Fashion Hut?</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                <div class="feature-card">
+                    <i class="fas fa-crown" style="font-size: 2.5rem; color: #c87e3a; margin-bottom: 1rem;"></i>
+                    <h3>Premium Quality</h3>
+                    <p>Handpicked fabrics and expert craftsmanship in every collection.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-globe" style="font-size: 2.5rem; color: #c87e3a; margin-bottom: 1rem;"></i>
+                    <h3>Diverse Collection</h3>
+                    <p>From ethnic wear to contemporary fashion, we have something for everyone.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-handshake" style="font-size: 2.5rem; color: #c87e3a; margin-bottom: 1rem;"></i>
+                    <h3>Customer First</h3>
+                    <p>Personalized service and customization options available.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="info-section">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-flex" style="margin-top: 2rem;">
+                <div class="contact-details">
+                    <div>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Visit Us</strong>
+                            <p>Main Bazar Street 1, near Elementary School<br>Garhshankar, Punjab - 144527</p>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong>Business Hours</strong>
+                            <p>Monday to Saturday: 10:00 AM - 8:00 PM<br>Sunday: Closed</p>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <strong>Contact Us</strong>
+                            <p>WhatsApp: <a href="https://wa.me/918437172895" target="_blank">+91 84371 72895</a><br>Instagram: <a href="https://www.instagram.com/fash_ionvision" target="_blank">@fash_ionvision</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="map-placeholder">
+                    <i class="fas fa-map" style="font-size: 3rem; color: #c87e3a; margin-bottom: 1rem;"></i>
+                    <p style="color: #6b3f1c; font-weight: 600;">📍 Garhshankar, Punjab<br>Get directions on Google Maps</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Fashion Hut Garments. All rights reserved.</p>
+        <p>&copy; 2026 Fashion Hut Garments. All rights reserved. | Crafted with 💚 for Fashion Lovers</p>
     </footer>
+
+    <!-- Load Admin Panel and Chatbot -->
+    <script src="admin-panel.js"></script>
+    <script src="fashionhut-complete.js"></script>
 </body>
 </html>
