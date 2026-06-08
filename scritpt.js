@@ -1,10 +1,336 @@
 // ============================================
+// ADVANCED ANIMATIONS & UI ENHANCEMENTS
+// ============================================
+
+// ========== NAVBAR SHRINK ON SCROLL ==========
+function initNavbarShrinkEffect() {
+  const navbar = document.querySelector('.navbar');
+  let lastScrollTop = 0;
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // Add shrink class when scrolled down
+    if (scrollTop > 50) {
+      navbar.classList.add('shrink');
+    } else {
+      navbar.classList.remove('shrink');
+    }
+    
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+  });
+}
+
+// ========== SCROLL-TRIGGERED ANIMATIONS ==========
+function initScrollAnimations() {
+  const observerOptions = {
+    threshold: 0.15,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        // Optional: Stop observing once animated
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Add scroll-fade-in class to elements that need animation
+  const elementsToObserve = document.querySelectorAll(
+    '.section-title, .gallery-card, .feature-card, .contact-details div, .map-placeholder, .owner-card'
+  );
+
+  elementsToObserve.forEach(element => {
+    // Add appropriate animation class based on element type
+    if (element.classList.contains('gallery-card')) {
+      element.classList.add('scroll-scale');
+    } else if (element.classList.contains('contact-details')) {
+      element.classList.add('scroll-slide-left');
+    } else if (element.classList.contains('map-placeholder')) {
+      element.classList.add('scroll-slide-right');
+    } else {
+      element.classList.add('scroll-fade-in');
+    }
+    
+    observer.observe(element);
+  });
+}
+
+// ========== SMOOTH PAGE SCROLL EFFECT ==========
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+}
+
+// ========== ADD ANIMATION DELAYS FOR STAGGERED EFFECTS ==========
+function initStaggeredAnimations() {
+  // Gallery cards with staggered animation
+  const galleryCards = document.querySelectorAll('.gallery-card');
+  galleryCards.forEach((card, index) => {
+    card.style.animationDelay = `${index * 0.1}s`;
+  });
+
+  // Feature cards with staggered animation
+  const featureCards = document.querySelectorAll('.feature-card');
+  featureCards.forEach((card, index) => {
+    card.style.animationDelay = `${0.4 + index * 0.15}s`;
+  });
+
+  // Contact detail items with staggered animation
+  const contactItems = document.querySelectorAll('.contact-details div');
+  contactItems.forEach((item, index) => {
+    item.style.animationDelay = `${0.1 + index * 0.1}s`;
+  });
+}
+
+// ========== PARALLAX SCROLL EFFECT ==========
+function initParallaxEffect() {
+  const heroSection = document.querySelector('.hero');
+  
+  if (heroSection) {
+    window.addEventListener('scroll', () => {
+      const scrollPosition = window.pageYOffset;
+      const parallaxValue = scrollPosition * 0.5;
+      
+      heroSection.style.backgroundPosition = `0px ${parallaxValue}px`;
+    });
+  }
+}
+
+// ========== FADE IN ELEMENTS ON PAGE LOAD ==========
+function initPageLoadAnimation() {
+  const elements = document.querySelectorAll('.hero-text, .hero-img, .owner-card');
+  
+  elements.forEach((element, index) => {
+    element.style.animation = `slideUp 0.7s cubic-bezier(0.2, 0.9, 0.4, 1.1) ${index * 0.2}s forwards`;
+    element.style.opacity = '0';
+  });
+}
+
+// ========== MOUSE MOVE EFFECT FOR HERO IMAGE ==========
+function initMouseMoveEffect() {
+  const heroImg = document.querySelector('.hero-img img');
+  
+  if (heroImg) {
+    document.addEventListener('mousemove', (e) => {
+      const { clientX, clientY } = e;
+      const { innerWidth, innerHeight } = window;
+      
+      const xPercent = (clientX / innerWidth - 0.5) * 20;
+      const yPercent = (clientY / innerHeight - 0.5) * 20;
+      
+      heroImg.style.transform = `perspective(1000px) rotateX(${-yPercent}deg) rotateY(${xPercent}deg)`;
+    });
+    
+    // Reset on mouse leave
+    document.addEventListener('mouseleave', () => {
+      heroImg.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+    });
+  }
+}
+
+// ========== BUTTON CLICK ANIMATION ==========
+function initButtonAnimations() {
+  const buttons = document.querySelectorAll('.btn');
+  
+  buttons.forEach(button => {
+    button.addEventListener('click', function(e) {
+      // Create ripple effect
+      const ripple = document.createElement('span');
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+      
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      ripple.classList.add('ripple');
+      
+      this.appendChild(ripple);
+      
+      setTimeout(() => ripple.remove(), 600);
+    });
+  });
+}
+
+// ========== TEXT GRADIENT ANIMATION ==========
+function initTextGradientAnimation() {
+  const h1 = document.querySelector('.hero-text h1');
+  
+  if (h1) {
+    const text = h1.textContent;
+    h1.innerHTML = text
+      .split('')
+      .map((char, index) => {
+        return `<span style="animation: fadeInUp 0.6s ease-out ${index * 0.05}s backwards; display: inline-block;">${char}</span>`;
+      })
+      .join('');
+  }
+}
+
+// ========== CARD HOVER LIFT EFFECT ==========
+function initCardHoverEffect() {
+  const cards = document.querySelectorAll('.gallery-card, .feature-card, .owner-card');
+  
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.transition = 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+    });
+  });
+}
+
+// ========== COUNT UP ANIMATION FOR STATS (if needed) ==========
+function initCountUpAnimation(element, target, duration = 2000) {
+  let current = 0;
+  const increment = target / (duration / 16);
+  const timer = setInterval(() => {
+    current += increment;
+    if (current >= target) {
+      element.textContent = target;
+      clearInterval(timer);
+    } else {
+      element.textContent = Math.floor(current);
+    }
+  }, 16);
+}
+
+// ========== NOTIFICATION/TOAST ANIMATION ==========
+function showNotification(message, type = 'success', duration = 3000) {
+  const notification = document.createElement('div');
+  notification.className = `notification notification-${type}`;
+  notification.textContent = message;
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: ${type === 'success' ? '#4CAF50' : '#ff9800'};
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    z-index: 10000;
+    animation: slideInRight 0.4s ease-out;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  `;
+  
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.style.animation = 'slideInLeft 0.4s ease-in reverse';
+    setTimeout(() => notification.remove(), 400);
+  }, duration);
+}
+
+// ========== FORM FOCUS ANIMATIONS ==========
+function initFormAnimations() {
+  const inputs = document.querySelectorAll('input, textarea, select');
+  
+  inputs.forEach(input => {
+    input.addEventListener('focus', function() {
+      this.style.boxShadow = '0 0 0 3px rgba(200, 126, 58, 0.1)';
+      this.style.borderColor = '#c87e3a';
+    });
+    
+    input.addEventListener('blur', function() {
+      this.style.boxShadow = 'none';
+      this.style.borderColor = '#ddd';
+    });
+  });
+}
+
+// ========== LAZY LOAD IMAGES ==========
+function initLazyLoadImages() {
+  const images = document.querySelectorAll('img[data-src]');
+  
+  const imageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        img.src = img.dataset.src;
+        img.classList.add('loaded');
+        imageObserver.unobserve(img);
+      }
+    });
+  });
+  
+  images.forEach(img => imageObserver.observe(img));
+}
+
+// ========== SCROLL PROGRESS BAR ==========
+function initScrollProgressBar() {
+  const progressBar = document.createElement('div');
+  progressBar.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #c87e3a, #e09d5e);
+    z-index: 999;
+    transition: width 0.2s ease;
+  `;
+  document.body.appendChild(progressBar);
+  
+  window.addEventListener('scroll', () => {
+    const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (window.pageYOffset / windowHeight) * 100;
+    progressBar.style.width = scrolled + '%';
+  });
+}
+
+// ========== INITIALIZE ALL EFFECTS ON PAGE LOAD ==========
+function initializeAllAnimations() {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      initNavbarShrinkEffect();
+      initScrollAnimations();
+      initSmoothScroll();
+      initStaggeredAnimations();
+      initPageLoadAnimation();
+      initMouseMoveEffect();
+      initButtonAnimations();
+      initTextGradientAnimation();
+      initCardHoverEffect();
+      initScrollProgressBar();
+      initFormAnimations();
+      initLazyLoadImages();
+    });
+  } else {
+    initNavbarShrinkEffect();
+    initScrollAnimations();
+    initSmoothScroll();
+    initStaggeredAnimations();
+    initPageLoadAnimation();
+    initMouseMoveEffect();
+    initButtonAnimations();
+    initTextGradientAnimation();
+    initCardHoverEffect();
+    initScrollProgressBar();
+    initFormAnimations();
+    initLazyLoadImages();
+  }
+}
+
+// Call initialization
+initializeAllAnimations();
+
+// ============================================
 // AI CHATBOT FOR FASHION HUT GARMENTS
 // ============================================
-// Add this entire code block to your existing script.js file
-// This creates an intelligent chatbot that answers questions about the website
 
-// Chatbot configuration
 const chatbotConfig = {
   name: "Fashion Assistant",
   avatar: "👗",
@@ -13,9 +339,7 @@ const chatbotConfig = {
   position: "bottom-right"
 };
 
-// Knowledge base for the chatbot (all information about the website)
 const chatbotKnowledge = {
-  // Store information
   storeName: "Fashion Hut Garments",
   owner: "Raman Nayyar",
   location: "Main Bazar street 1 near elementary school , Garhshankar, Punjab - 144527",
@@ -24,7 +348,6 @@ const chatbotKnowledge = {
   instagramUrl: "https://www.instagram.com/fash_ionvision",
   whatsappUrl: "https://wa.me/918437172895",
   
-  // Products and services
   products: [
     "Men's ethnic wear (Kurtas, Sherwanis)",
     "Women's traditional wear (Sarees, Kurtis, Suits)",
@@ -36,12 +359,10 @@ const chatbotKnowledge = {
     "Premium garment collection"
   ],
   
-  // Business hours
   businessHours: "Monday to Saturday: 10:00 AM - 8:00 PM | Sunday: Closed",
   
-  // FAQs
   faqs: {
-    "what products do you sell": "We offer Men's ethnic wear, Women's traditional wear (Sarees, Kurtis, Suits), Western wear, Wedding collection, Festive outfits, Cotton summer collection, and Winter layering clothes.",
+    "what products do you sell": "We offer Men's ethnic wear, Women's traditional wear (Sarees, Kurtis, Suits), Western wear, Wedding collection, Festive outfits, Cotton summer collection, and Winter wear.",
     "where is your store located": "Our store is located at Main Bazar street 1 near elementary school , Garhshankar, Punjab - 144527.",
     "what are your business hours": "We are open Monday to Saturday from 10:00 AM to 8:00 PM. We remain closed on Sundays.",
     "who is the owner": "The owner and founder of Fashion Hut Garments is Mr. Raman Nayyar.",
@@ -55,7 +376,6 @@ const chatbotKnowledge = {
     "new arrivals": "We regularly update our collection. Follow @fash_ionvision on Instagram for new arrival announcements!"
   },
   
-  // Keywords mapping for better matching
   keywords: {
     "product": "what products do you sell",
     "products": "what products do you sell",
@@ -88,12 +408,9 @@ const chatbotKnowledge = {
   }
 };
 
-// Create and inject chatbot HTML/CSS into the page
 function createChatbot() {
-  // Create chatbot container
   const chatbotHTML = `
     <div id="chatbot-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000; font-family: 'Inter', sans-serif;">
-      <!-- Chatbot Button -->
       <div id="chatbot-toggle" style="
         width: 60px;
         height: 60px;
@@ -110,7 +427,6 @@ function createChatbot() {
         <span style="font-size: 30px;">${chatbotConfig.avatar}</span>
       </div>
       
-      <!-- Chatbot Window (hidden by default) -->
       <div id="chatbot-window" style="
         position: absolute;
         bottom: 80px;
@@ -125,7 +441,6 @@ function createChatbot() {
         overflow: hidden;
         animation: slideUp 0.3s ease;
       ">
-        <!-- Chatbot Header -->
         <div style="
           background: ${chatbotConfig.primaryColor};
           color: white;
@@ -148,7 +463,6 @@ function createChatbot() {
           ">&times;</button>
         </div>
         
-        <!-- Chat Messages Area -->
         <div id="chatbot-messages" style="
           flex: 1;
           overflow-y: auto;
@@ -159,7 +473,6 @@ function createChatbot() {
           gap: 10px;
         "></div>
         
-        <!-- Quick Reply Buttons -->
         <div id="quick-replies" style="
           padding: 10px;
           background: white;
@@ -174,7 +487,6 @@ function createChatbot() {
           <button class="quick-reply-btn" data-question="How to contact?">📞 Contact</button>
         </div>
         
-        <!-- Chat Input Area -->
         <div style="
           padding: 10px;
           background: white;
@@ -283,7 +595,6 @@ function createChatbot() {
   
   document.body.insertAdjacentHTML('beforeend', chatbotHTML);
   
-  // Get elements
   const toggleBtn = document.getElementById('chatbot-toggle');
   const chatbotWindow = document.getElementById('chatbot-window');
   const closeBtn = document.getElementById('chatbot-close');
@@ -291,112 +602,86 @@ function createChatbot() {
   const inputField = document.getElementById('chatbot-input');
   const messagesContainer = document.getElementById('chatbot-messages');
   
-  // Add welcome message
-  addBotMessage(chatbotConfig.welcomeMessage);
-  
-  // Toggle chatbot window
-  toggleBtn.addEventListener('click', () => {
-    if (chatbotWindow.style.display === 'none' || chatbotWindow.style.display === '') {
-      chatbotWindow.style.display = 'flex';
-      toggleBtn.style.animation = 'none';
-    } else {
-      chatbotWindow.style.display = 'none';
-    }
-  });
-  
-  // Close chatbot
-  closeBtn.addEventListener('click', () => {
-    chatbotWindow.style.display = 'none';
-  });
-  
-  // Send message function
-  function sendMessage() {
-    const message = inputField.value.trim();
-    if (message === '') return;
-    
-    // Add user message to chat
-    addUserMessage(message);
-    inputField.value = '';
-    
-    // Get bot response
-    setTimeout(() => {
-      const response = getBotResponse(message);
-      addBotMessage(response);
-    }, 500);
-  }
-  
-  // Add user message to chat
-  function addUserMessage(message) {
-    const messageDiv = document.createElement('div');
-    messageDiv.className = 'message-bubble user-message';
-    messageDiv.textContent = message;
-    messagesContainer.appendChild(messageDiv);
-    scrollToBottom();
-  }
-  
-  // Add bot message to chat
   function addBotMessage(message) {
     const messageDiv = document.createElement('div');
     messageDiv.className = 'message-bubble bot-message';
     messageDiv.innerHTML = message;
     messagesContainer.appendChild(messageDiv);
-    scrollToBottom();
-  }
-  
-  // Scroll to bottom of chat
-  function scrollToBottom() {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
   
-  // Get bot response based on user input
+  function addUserMessage(message) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message-bubble user-message';
+    messageDiv.textContent = message;
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+  
   function getBotResponse(userMessage) {
     const lowerMessage = userMessage.toLowerCase();
     
-    // Check for greetings
     if (lowerMessage.match(/hello|hi|hey|namaste|good morning|good evening/)) {
       return "👋 Hello! Welcome to Fashion Hut Garments! How can I help you today?";
     }
     
-    // Check for thanks
     if (lowerMessage.match(/thank|thanks|thx/)) {
       return "😊 You're welcome! Feel free to ask if you need anything else. Happy shopping!";
     }
     
-    // Check for goodbye
     if (lowerMessage.match(/bye|goodbye|see you|exit/)) {
       return "👋 Goodbye! Visit us again at Fashion Hut Garments. Have a great day!";
     }
     
-    // Check for help
-    if (lowerMessage.match(/help|what can you do|how to use/)) {
-      return "🤖 I can help you with:\n• Product information\n• Store location and timings\n• Contact details\n• Wedding collection\n• New arrivals\nJust ask me anything about Fashion Hut Garments!";
-    }
-    
-    // Match keywords to FAQs
     for (const [keyword, question] of Object.entries(chatbotKnowledge.keywords)) {
       if (lowerMessage.includes(keyword)) {
         return chatbotKnowledge.faqs[question] || "I'll help you with that! Please contact us directly on WhatsApp for more details.";
       }
     }
     
-    // Direct FAQ matching
     for (const [question, answer] of Object.entries(chatbotKnowledge.faqs)) {
-      if (lowerMessage.includes(question) || question.includes(lowerMessage)) {
+      if (lowerMessage.includes(question)) {
         return answer;
       }
     }
     
-    // Default response for unknown queries
-    return `📌 I'm not sure about that. Here's what I can help with:\n\n📍 Store Location: ${chatbotKnowledge.location}\n📞 WhatsApp: ${chatbotKnowledge.whatsapp}\n📷 Instagram: ${chatbotKnowledge.instagram}\n\nOr ask me about products, timings, wedding collection, etc.!`;
+    return `📌 I'm not sure about that. Here's what I can help with:\n\n📍 Store Location: ${chatbotKnowledge.location}\n📞 WhatsApp: ${chatbotKnowledge.whatsapp}\n📷 Instagram: ${chatbotKnowledge.instagram}`;
   }
   
-  // Event listeners
+  addBotMessage(chatbotConfig.welcomeMessage);
+  
+  toggleBtn.addEventListener('click', () => {
+    if (chatbotWindow.style.display === 'none' || chatbotWindow.style.display === '') {
+      chatbotWindow.style.display = 'flex';
+      toggleBtn.style.animation = 'none';
+      inputField.focus();
+    } else {
+      chatbotWindow.style.display = 'none';
+    }
+  });
+  
+  closeBtn.addEventListener('click', () => {
+    chatbotWindow.style.display = 'none';
+  });
+  
+  function sendMessage() {
+    const message = inputField.value.trim();
+    if (message === '') return;
+    
+    addUserMessage(message);
+    inputField.value = '';
+    
+    setTimeout(() => {
+      const response = getBotResponse(message);
+      addBotMessage(response);
+    }, 500);
+  }
+  
   sendBtn.addEventListener('click', sendMessage);
   inputField.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') sendMessage();
   });
   
-  // Quick reply buttons
   document.querySelectorAll('.quick-reply-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const question = btn.getAttribute('data-question');
@@ -409,51 +694,10 @@ function createChatbot() {
   });
 }
 
-// Initialize chatbot when DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', createChatbot);
 } else {
   createChatbot();
 }
 
-// ============================================
-// OPTIONAL: Add chatbot customization
-// ============================================
-
-// Function to show product catalog in chatbot
-function showProductCatalog() {
-  let productList = "🛍️ <strong>Our Products:</strong><br><br>";
-  chatbotKnowledge.products.forEach(product => {
-    productList += "• " + product + "<br>";
-  });
-  productList += "<br>📞 Contact us on WhatsApp for prices and availability!";
-  return productList;
-}
-
-// Add product catalog to chatbot knowledge
-chatbotKnowledge.faqs["show products"] = showProductCatalog();
-chatbotKnowledge.faqs["catalog"] = showProductCatalog();
-chatbotKnowledge.faqs["what do you sell"] = showProductCatalog();
-
-// Function to share contact card
-function showContactCard() {
-  return `
-    📱 <strong>Contact Us:</strong><br><br>
-    👨‍💼 Owner: ${chatbotKnowledge.owner}<br>
-    💬 WhatsApp: <a href="${chatbotKnowledge.whatsappUrl}" target="_blank" style="color: #c87e3a;">${chatbotKnowledge.whatsapp}</a><br>
-    📷 Instagram: <a href="${chatbotKnowledge.instagramUrl}" target="_blank" style="color: #c87e3a;">${chatbotKnowledge.instagram}</a><br>
-    📍 Location: ${chatbotKnowledge.location}<br><br>
-    Click the links to connect with us directly!
-  `;
-}
-
-chatbotKnowledge.faqs["contact info"] = showContactCard();
-chatbotKnowledge.faqs["details"] = showContactCard();
-
-console.log("🤖 AI Chatbot initialized! Ask me about Fashion Hut Garments!");
-
-
-
-
-
-
+console.log("✨ Fashion Hut Garments - All animations and features loaded!");
